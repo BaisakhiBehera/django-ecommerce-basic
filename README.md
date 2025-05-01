@@ -41,3 +41,29 @@ A **basic e-commerce web application** built with **Django** for the backend and
 ![Screenshot (647)](https://github.com/user-attachments/assets/662e27ed-406d-4a4c-9155-0bdbcf0ca737)
 ![Screenshot (648)](https://github.com/user-attachments/assets/aabd7ee9-b7c6-4062-a0da-5b57e9357eb6)
 ![Screenshot (649)](https://github.com/user-attachments/assets/85c1458e-b5fc-429b-b308-827b7645e7c8)
+
+
+## Setup Instructions
+
+1. **Clone the repository**
+```bash
+git clone https://github.com/your-username/ecommerce-django.git
+cd ecommerce-django
+
+
+2. Create a virtual environment
+python3 -m venv venv
+source venv/bin/activate
+
+3.Install dependencies
+pip install -r requirements.txt
+
+4.Apply migrations and create superuser
+python manage.py migrate
+python manage.py createsuperuser
+
+5.Run the server
+python manage.py runserver
+
+
+
