@@ -47,8 +47,8 @@ A **basic e-commerce web application** built with **Django** for the backend and
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/your-username/ecommerce-django.git
-cd ecommerce-django
+git clone https://github.com/BaisakhiBehera/django-ecommerce-basic.git
+cd django-ecommerce-basic
 
 
 2. Create a virtual environment
