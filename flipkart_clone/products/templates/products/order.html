@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Details</title>
+    <style>
+        body {
+            background-color: #ede5f1;
+            padding: 30px;
+
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .form-container {
+            max-width: 550px;
+            margin: auto;
+            background: white;
+    
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0px 10px 25px rgba(0,0,0,0.1);
+        }
+        .form-container h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-container input,
+        .form-container textarea {
+            width: 97%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .form-container button:hover {
+            background-color: #218838;
+        }
+        .back-link {
+            display: block;
+            margin-top: 15px;
+            text-align: center;
+            text-decoration: none;
+            color: #007bff;
+            font-size: 14px;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .success-msg {
+            color: green;
+            text-align: center;
+            font-weight: bold;
+        }
+        .total-box {
+            background: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-size: 16px;
+            margin-top: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Enter Your Details</h2>
+
+
+    <form method="POST" action="{% url 'submit_order' %}">
+        {% csrf_token %}
+        <label for="name">Full Name:</label>
+        <input type="text" name="name" required>
+        
+        <label for="email">Email:</label>
+        <input type="email" name="email" required>  
+
+        <label for="address">Address:</label>
+        <textarea name="address" rows="3" required></textarea>
+
+        <label for="phone">Phone Number:</label>
+        <input type="tel" name="phone" required>
+
+        <div class="total-box">
+            Total Price: ₹{{ total_price }}
+        </div>
+
+        <button type="submit">Place Order</button>
+    </form>
+
+    <a href="{% url 'all_products' %}" class="back-link">← Back to Products</a>
+</div>
+
+</body>
+</html>

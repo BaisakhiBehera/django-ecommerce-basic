@@ -1,0 +1,506 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Products</title>
+    <link rel="stylesheet" href="{% static 'products/bootstrap.min.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color:  #80628f;  
+            --secondary-color:  #80628f; 
+            --accent-color: #5bc0be;
+            --text-color: #333;
+            --light-text: #6c757d;
+            --bg-color: #f8f9fa;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Header styling */
+        .page-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 40px 0 50px;
+            position: relative;
+        }
+
+        .page-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: linear-gradient(135deg, var(--bg-color) 25%, transparent 25%) -20px 0,
+                        linear-gradient(225deg, var(--bg-color) 25%, transparent 25%) -20px 0,
+                        linear-gradient(315deg, var(--bg-color) 25%, transparent 25%),
+                        linear-gradient(45deg, var(--bg-color) 25%, transparent 25%);
+            background-size: 40px 40px;
+            background-color: var(--primary-color);
+        }
+
+        .page-header h1 {
+            font-weight: 700;
+            margin: 0;
+            font-size: 32px;
+            letter-spacing: 0.5px;
+        }
+        
+        .header-subtitle {
+            font-size: 16px;
+            opacity: 0.85;
+            margin-top: 8px;
+        }
+
+        /* Product grid */
+        .product-container {
+            max-width: 1140px;
+            margin: 50px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px;
+            padding: 0 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background-color: var(--accent-color);
+            color: white;
+            font-weight: 600;
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 4px;
+            z-index: 1;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        
+        .product-card:hover img {
+            transform: scale(1.03);
+        }
+
+        .product-card-body {
+            padding: 16px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card-body h5 {
+            font-size: 17px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .product-meta {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            font-size: 13px;
+            color: var(--light-text);
+        }
+        
+        .product-rating {
+            margin-right: 12px;
+        }
+        
+        .product-rating i {
+            color: #ffc107;
+            font-size: 12px;
+        }
+
+        .product-card-body p {
+            font-size: 16px;
+            margin: 4px 0 12px;
+            color: var(--secondary-color);
+            font-weight: 700;
+        }
+
+        .btn-add-cart {
+            background-color:  #80628f; 
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-add-cart:hover {
+            background-color: var(--primary-color);
+        }
+        
+        .btn-add-cart i {
+            margin-right: 8px;
+        }
+
+        /* Navigation section */
+        .navigation-section {
+            background-color: rgb(255, 255, 255);
+            padding: 16px 0;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            bottom: 0;
+            z-index: 10;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            max-width: 800px;
+            margin: 0 auto;
+            gap: 12px;
+        }
+
+        .nav-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 18px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .nav-button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .nav-button i {
+            margin-right: 8px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--secondary-color);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            max-width: 1140px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+        
+        .footer-section h3 {
+            color: white;
+            margin-bottom: 16px;
+            font-size: 16px;
+            position: relative;
+            padding-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .footer-section h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 2px;
+            background: var(--accent-color);
+        }
+        
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+        
+        .footer-section ul li a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s ease;
+        }
+        
+        .footer-section ul li a:hover {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+        
+        .footer-section p {
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.2s ease;
+        }
+        
+        .social-links a:hover {
+            background: var(--accent-color);
+            color: var(--secondary-color);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            margin-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            grid-column: 1 / -1;
+        }
+        
+        .empty-state i {
+            font-size: 48px;
+            color: var(--light-text);
+            margin-bottom: 16px;
+        }
+        
+        .empty-state p {
+            font-size: 16px;
+            color: var(--light-text);
+            margin-bottom: 20px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .product-container {
+                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+                gap: 16px;
+            }
+            
+            .footer-section h3:after {
+                left: 0;
+                transform: none;
+            }
+            
+            .navigation-section {
+                padding: 12px 0;
+            }
+            
+            .navigation-buttons {
+                gap: 8px;
+            }
+            
+            .nav-button {
+                padding: 8px 14px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product-container {
+                grid-template-columns: 1fr;
+                max-width: 320px;
+            }
+            
+            .page-header {
+                padding: 30px 0 40px;
+            }
+            
+            .page-header h1 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header class="page-header">
+    <div class="container text-center">
+        <h1>Premium Products</h1>
+        <div class="header-subtitle">Curated quality for modern living</div>
+    </div>
+</header>
+
+<!-- Products Grid -->
+<div class="product-container">
+    {% for product in products %}
+    <div class="product-card">
+        {% if product.is_new %}
+        <div class="product-badge">NEW</div>
+        {% endif %}
+        <a href="{% url 'product_detail' product.id %}">
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        </a>
+        <div class="product-card-body">
+            <a href="{% url 'product_detail' product.id %}" style="text-decoration: none; color: inherit;">
+                <h5>{{ product.name }}</h5>
+            </a>
+            <div class="product-meta">
+                <span class="product-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </span>
+                <span class="product-stock">In Stock</span>
+            </div>
+            <p>₹{{ product.price|floatformat:2 }}</p>
+
+            <form method="POST" action="{% url 'add_to_cart' product.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn-add-cart">
+                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                </button>
+            </form>
+        </div>
+    </div>
+    {% empty %}
+    <div class="empty-state">
+        <i class="fas fa-box-open"></i>
+        <p>No products are currently available.</p>
+        <a href="/categories/" class="nav-button">
+            <i class="fas fa-th-large"></i> Browse Categories
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+
+<!-- Navigation Buttons -->
+<div class="navigation-section">
+    <div class="navigation-buttons">
+        <a href="/categories/" class="nav-button">
+            <i class="fas fa-th-large"></i> Categories
+        </a>
+        <a href="/cart/" class="nav-button">
+            <i class="fas fa-shopping-cart"></i> View Cart
+        </a>
+        <a href="/products/" class="nav-button">
+            <i class="fas fa-boxes"></i> All Products
+        </a>
+        <a href="/logout/" class="nav-button">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>About Us</h3>
+            <p>We offer premium products to enhance your lifestyle with quality and style.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-pinterest"></i></a>
+            </div>
+        </div>
+        
+        <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="/home/">Home</a></li>
+                <li><a href="/products/">Products</a></li>
+                <li><a href="/categories/">Categories</a></li>
+                <li><a href="/about/">About Us</a></li>
+                <li><a href="/contact/">Contact</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-section">
+            <h3>Customer Service</h3>
+            <ul>
+                <li><a href="/faq/">FAQ</a></li>
+                <li><a href="/shipping/">Shipping Policy</a></li>
+                <li><a href="/returns/">Returns & Exchanges</a></li>
+                <li><a href="/terms/">Terms & Conditions</a></li>
+                <li><a href="/privacy/">Privacy Policy</a></li>
+            </ul>
+        </div>
+        
+        <div class="footer-section">
+            <h3>Contact Info</h3>
+            <p><i class="fas fa-map-marker-alt"></i> 123 Shopping Street, City</p>
+            <p><i class="fas fa-phone"></i> +1 234 567 8900</p>
+            <p><i class="fas fa-envelope"></i> info@yourshop.com</p>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2025 Your Shop Name. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="{% static 'products/jquery.min.js' %}"></script>
+<script src="{% static 'products/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+</html>

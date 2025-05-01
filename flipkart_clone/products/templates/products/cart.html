@@ -1,0 +1,132 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Cart</title>
+    <style>
+        .cart-container {
+            padding: 30px;
+            background-color: #ddd9f4;
+        }
+        .cart-item {
+            width: 22%;
+            margin: 1%;
+            background-color: #efeef4;
+            float: left;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 2px 2px 5px #ddd;
+        }
+        .cart-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .quantity-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .quantity-buttons form {
+            display: inline;
+            margin: 0 5px;
+        }
+        .remove-button {
+            text-align: center;
+            margin-top: 10px;
+        }
+        .remove-button form {
+            display: inline;
+        }
+        .total-container {
+            clear: both;
+            margin-top: 30px;
+            font-size: 20px;
+            text-align: center;
+        }
+        .order-button {
+            margin-top: 20px;
+        }
+        .order-button button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: rgb(50, 164, 12);
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .total-container {
+            background-color:  #efeef4;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 2px 2px 5px #ddd;
+            
+        }
+    </style>
+</head>
+<body>
+<div class="cart-container">
+    <h1>Your Shopping Cart</h1>
+
+    {% for item in cart_items %}
+    <div class="cart-item">
+        {% if item.product.image %}
+            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}">
+        {% else %}
+            <img src="{% static 'default_product.jpg' %}" alt="No Image">
+        {% endif %}
+        <h3>{{ item.product.name }}</h3>
+        <p>{{ item.product.description }}</p>
+        <p>Price: ₹{{ item.product.price }}</p>
+        <p>Quantity: {{ item.quantity }}</p>
+        <p><strong>Subtotal:</strong> ₹{{ item.get_total_price }}</p>
+
+        <div class="quantity-buttons">
+            <form method="POST" action="{% url 'update_quantity' item.id %}">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="decrease">
+                <button type="submit">−</button>
+            </form>
+            <form method="POST" action="{% url 'update_quantity' item.id %}">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="increase">
+                <button type="submit">+</button>
+            </form>
+        </div>
+
+        <!-- Remove button -->
+        <div class="remove-button">
+            <form method="POST" action="{% url 'remove_item' item.id %}">
+                {% csrf_token %}
+                <button type="submit" style="background-color: red; color: white;">Remove</button>
+            </form>
+        </div>
+    </div>
+    {% empty %}
+    <p>Your cart is empty.</p>
+   
+    {% endfor %}
+
+    {% if cart_items %}
+    <div class="total-container">
+        <h2>Total Price: ₹{{ total_price }}</h2>
+        <div class="order-button">
+            <form method="POST" action="{% url 'order' %}">
+                {% csrf_token %}
+                <button type="submit">Place Order</button>
+            </form>
+        
+        </div>  
+    </div>
+    {% endif %}
+    <div class="product-nav">
+        <a href="/products/">
+            <i class="fas fa-arrow-left"></i> Back To All Products
+        </a>
+    </div>
+</div>
+</body>
+</html>

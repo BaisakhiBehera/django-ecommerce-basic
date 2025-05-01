@@ -1,0 +1,154 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="{% static 'accounts/style.css' %}">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #ddd9f4;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 380px;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 35px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 25px;
+            color: #333;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+
+        .error {
+            background-color: #fff2f2;
+            color: #e74c3c;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #555;
+            font-size: 14px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #eaeaea;
+            border-radius: 8px;
+            font-size: 14px;
+            margin-bottom: 16px;
+            transition: all 0.2s;
+            background-color: #f9f9f9;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #a499e8;
+            background-color: white;
+        }
+
+        input::placeholder {
+            color: #aaa;
+        }
+
+        br {
+            display: none;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #8777de;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 5px;
+        }
+
+        .btn:hover {
+            background-color: #7667cf;
+        }
+
+        .switch-account {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .switch-account a {
+            color: #8777de;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .switch-account a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="form-container">
+            <h2>Sign Up</h2>
+
+            {% if error_message %}
+                <p class="error">{{ error_message }}</p>
+            {% endif %}
+
+            <form method="POST">
+                {% csrf_token %}
+                
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" required placeholder="Enter your username"><br><br>
+
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required placeholder="Enter your email"><br><br>
+
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required placeholder="Enter your password"><br><br>
+
+                <button type="submit" class="btn">Sign Up</button>
+            </form>
+
+            <p class="switch-account">Already have an account? <a href="/login/">Login</a></p>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thank You!</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .thank-you-container {
+            max-width: 600px;
+            margin: 100px auto;
+            background-color: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        .thank-you-container h1 {
+            color: #28a745;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        .thank-you-container p {
+            font-size: 18px;
+            color: #555;
+            margin: 15px 0;
+        }
+        .thank-you-container .back-button {
+            margin-top: 25px;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+        }
+        .thank-you-container .back-button:hover {
+            background-color: #0056b3;
+        }
+        .icon-check {
+            font-size: 50px;
+            color: #28a745;
+        }
+    </style>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="thank-you-container">
+    <div class="icon-check">
+        <i class="fas fa-check-circle"></i>
+    </div>
+    <h1>Thank You, {{ user_name }}!</h1>
+    <p>We appreciate your order and are working to get it to you as quickly as possible.</p>
+    <p>We'll notify you once your order is on its way. 📦</p>
+    <a href="{% url 'all_products' %}" class="back-button">← Continue Shopping</a>
+    <a href="{% url 'logout' %}" class="back-button">← Logout</a>
+</div>
+
+</body>
+</html>

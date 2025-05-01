@@ -1,0 +1,134 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories</title>
+    <link rel="stylesheet" href="{% static 'products/style.css' %}">
+    <style>
+        /* Resetting some default styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color:  #ddd9f4; /* Light background for a clean look */
+        }
+
+        /* Main container for centering content */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 40px;
+            height: 500px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 40px;
+            color: #333;
+        }
+
+        /* Categories Section */
+        .category-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Responsive grid */
+            gap: 30px;
+        }
+
+        .category-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .category-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-item a {
+            display: block;
+            color: #060312e8;;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 500;
+            text-transform: capitalize;
+            transition: color 0.3s ease;
+        }
+
+        .category-item a:hover {
+            color: #d2c9ff;;
+        }
+
+        /* Navigation buttons */
+        .navigation-links {
+            text-align: center;
+            margin-top: 40px;
+            
+        }
+
+        .nav-link {
+            background-color: #040111;; /* Primary color */
+            color: white;
+            text-decoration: none;
+            padding: 15px 25px;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: 500;
+            margin: 0 15px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .nav-link:hover {
+            background-color: #d2c9ff;;
+            transform: translateY(-2px);
+        }
+
+        /* Mobile responsive adjustments */
+        @media (max-width: 768px) {
+            .category-list {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .category-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Browse Categories</h2>
+
+    <div class="category-list">
+        {% for category in categories %}
+            <div class="category-item">
+                <a href="{% url 'product_list' category.id %}">{{ category.name }}</a>
+            </div>
+        {% empty %}
+            <p style="text-align: center; color: #777;">No categories available.</p>
+        {% endfor %}
+    </div>
+
+    <div class="navigation-links">
+        <a href="/cart/" class="nav-link">View Cart</a>
+        <a href="/logout/" class="nav-link">Logout</a>
+    </div>
+</div>
+
+</body>
+</html>
